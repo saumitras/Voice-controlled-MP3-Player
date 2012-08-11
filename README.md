@@ -3,4 +3,4 @@ Voice-controlled-MP3-Player
 
 A MP3 player which accept voice command like PLAY, PAUSE, FORWARD, etc. Using C# and Microsoft Speech API.
 
-![My image](screenshot.jpg)
+[![My image](https://github.com/i-saumitra/Voice-controlled-MP3-Player/blob/master/screenshot.jpg)]
