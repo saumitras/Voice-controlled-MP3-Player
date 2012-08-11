@@ -30,9 +30,11 @@ namespace media_player
         int temp=0;
         
 
-        public Form1()
+        public HomeScreen()
         {
             InitializeComponent();
+			
+			//add words which can be recognized
             Choices ch = new Choices();
             ch.Add("PLAY");
             ch.Add("PAUSE");
@@ -42,13 +44,14 @@ namespace media_player
             ch.Add("MUTE");
             ch.Add("PLUS");
             ch.Add("MINUS");
-            //ch.Add("SHUT");
-
+            
+			//add these words to grammar and create a event handler for speech recognized event
             Grammar gr = new Grammar(new GrammarBuilder(ch));
             gr.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(gr_SpeechRecognized);
             recognizer.LoadGrammar(gr);
         }
 
+		//function to trigger in case of recognition
         void gr_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
 
@@ -63,23 +66,21 @@ namespace media_player
                 textBox1.Text = song_path;
                 try
                 {
-
                     song.Stop();
                 }
                 catch (Exception ex) { }
-
 
                 try
                 {
                     song = new Audio(song_path);
                     timer1.Interval = (int)(song.Duration * 10);
                     progressBar1.Value = 0;
-                    //MessageBox.Show(timer1.Interval.ToString());
+                 
                 }
                 catch (Exception ex) { }
                 
             }
-            ///////////////////////////////////
+
             if (e.Result.Text == "PLAY")
             {
                 try
@@ -96,7 +97,7 @@ namespace media_player
 
             }
 
-            ///////////////////////////////////////
+
             if (e.Result.Text == "PAUSE")
             {
                 try
@@ -133,8 +134,8 @@ namespace media_player
                 }
 
             }
-            //////////////////////////////////
-            if (e.Result.Text == "ONE")        /////forward
+
+            if (e.Result.Text == "ONE")        //forward the song by 5 seconds
             {
                 try
                 {
@@ -157,8 +158,8 @@ namespace media_player
                 }
             }
 
-            ///////////////////////////////
-            if (e.Result.Text == "TWO")
+            
+            if (e.Result.Text == "TWO")       // revind the song by 5 seconds
             {
                 try
                 {
@@ -181,8 +182,8 @@ namespace media_player
                 }
 
             }
-            /////////////////////////
-            if (e.Result.Text == "SHUT")
+            
+            if (e.Result.Text == "SHUT")     // toggle mute/unmute
             {
                 if (!ismute)
                 {
@@ -200,8 +201,7 @@ namespace media_player
             }
 
 
-            /////////////////////////
-            if (e.Result.Text == "PLUS")
+            if (e.Result.Text == "PLUS")   //increase volume
             {
                 try
                 {
@@ -214,9 +214,8 @@ namespace media_player
 
             }
 
-            ////////////////////////
-            /////////////////////////
-            if (e.Result.Text == "MINUS")
+      \
+            if (e.Result.Text == "MINUS")   //decrease volume
             {
                 try
                 {
@@ -232,6 +231,7 @@ namespace media_player
 
         }
    
+		//select a song
         private void button1_Click(object sender, EventArgs e)
         {
             timer1.Stop();
@@ -261,6 +261,7 @@ namespace media_player
         
         }
 
+		//play the song
         private void button2_Click(object sender, EventArgs e)
         {
             try
@@ -276,6 +277,8 @@ namespace media_player
             
         }
 
+		
+		//pause the song
         private void button3_Click(object sender, EventArgs e)
         {
             try
@@ -295,11 +298,14 @@ namespace media_player
             }
         }
 
+		
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
                    
         }
 
+		
+		//stop the playback
         private void button4_Click(object sender, EventArgs e)
         {
             try
@@ -317,6 +323,8 @@ namespace media_player
             }
         }
 
+		
+		//forward the song by 5 seconds
         private void button5_Click(object sender, EventArgs e)
         {
 
@@ -341,6 +349,8 @@ namespace media_player
             }
         }
 
+		
+		//revind the song by 5 seconds
         private void button6_Click(object sender, EventArgs e)
         {
             try
@@ -365,6 +375,8 @@ namespace media_player
 
         }
 
+		
+		//increase volume
         private void button7_Click(object sender, EventArgs e)
         {
             try
@@ -377,6 +389,8 @@ namespace media_player
             }
         }
 
+		
+		//decrease volume
         private void button8_Click(object sender, EventArgs e)
         {
             try
@@ -391,6 +405,7 @@ namespace media_player
             }
         }
 
+		//toggle mute/unmute
         private void button9_Click(object sender, EventArgs e)
         {
             if (!ismute)
@@ -410,6 +425,7 @@ namespace media_player
         }
 
 
+		
         private void timer1_Tick(object sender, EventArgs e)
         {
 
@@ -417,19 +433,11 @@ namespace media_player
             textBox3.Text = ((int)(song.CurrentPosition)).ToString();
 
             textBox4.Text = ((int)(song.Duration - song.CurrentPosition)).ToString();
-            //label3.Text = song.CurrentPosition.ToString();
-
-            //label4.Text = interval.ToString();
-
-            //if((song.CurrentPosition % interval)==0)
+      
             progressBar1.Increment(1);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-        }
-
+		
         private void timer2_Tick(object sender, EventArgs e)
         {
             textBox2.Text = ((int)(song.Duration)).ToString();
@@ -438,7 +446,11 @@ namespace media_player
             textBox4.Text = ((int)(song.Duration - song.CurrentPosition)).ToString();
 
         }
+		
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+        }
 
-       
     }
 }
